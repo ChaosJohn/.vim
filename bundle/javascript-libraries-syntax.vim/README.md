@@ -1,7 +1,7 @@
 javascript-libraries-syntax.vim
 ===============================
 
-Syntax file for JavaScript libraries. Supports JavaScript libraries I am using (patches welcome).
+Syntax file for JavaScript libraries. Supports JavaScript libraris I am using (patches welcome).
 Should works well with other JavaScript syntax file. [SyntaxComplete][] also works well on all 
 supported languages.
 
@@ -16,14 +16,7 @@ Libraries
 * [Backbone.js](http://backbonejs.org/)
 * [prelude.ls](http://gkz.github.com/prelude-ls/)
 * [AngularJS](http://angularjs.org/)
-* [AngularUI](http://angular-ui.github.io)
-* [React](https://facebook.github.io/react/)
-* [Flux](https://facebook.github.io/flux/)
 * [RequireJS](http://requirejs.org/)
-* [Sugar.js](http://sugarjs.com/)
-* [Jasmine](http://pivotal.github.io/jasmine/)
-* [Chai](http://chaijs.com/)
-* [Handlebars](http://handlebarsjs.com/)
 
 File Types
 ----------
@@ -58,16 +51,7 @@ Support libs id:
 * Backbone.js: backbone
 * prelude.ls: prelude
 * AngularJS: angularjs
-* AngularUI: angularui
-* React: react
-* Flux: flux
 * RequireJS: requirejs
-* Sugar.js: sugar
-* Jasmine: jasmine
-* Chai: chai
-* Handlebars: handlebars
-
-Default lib set is: `jquery,underscore,backbone`
 
 You can use [local vimrc][] to setup libraries used in project. Sample code for local vimrc:
 
@@ -83,6 +67,7 @@ Todo
 ----
 
 * Support future version of SyntaxComplete
+* Use `b:current_syntax` instead of `&filetype`
 
 Known Issue
 -----------
@@ -96,27 +81,6 @@ All repeat defination will be removed when SyntaxComplete supports this feature.
 
 Changes
 -------
-
-### Version 0.4
-* Add React, Flux, Chai, Handlbars
-* Default lib set
-* Bug fix
-
-### Version 0.3.6
-* Add Jasmine, AngularUI
-* Update underscore, jQuery
-
-### Version 0.3.5
-* Add sugar.js support
-* b:current_syntax to detect current syntax
-
-### Version 0.3.4
-* Add $ to iskeyword for jQuery and angular (Issue #4)
-* Support linecomment (Issue #6)
-* Add augularjs HTML custom attribute support
-
-### Version 0.3.3
-* No strict mode, better compatibility.
 
 ### Version 0.3.2
 * Fix coffee script compatible

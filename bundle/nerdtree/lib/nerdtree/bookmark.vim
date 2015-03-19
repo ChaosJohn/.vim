@@ -19,9 +19,7 @@ function! s:Bookmark.AddBookmark(name, path)
         endif
     endfor
     call add(s:Bookmark.Bookmarks(), s:Bookmark.New(a:name, a:path))
-    if g:NERDTreeBookmarksSort ==# 1
-        call s:Bookmark.Sort()
-    endif
+    call s:Bookmark.Sort()
 endfunction
 
 " FUNCTION: Bookmark.Bookmarks()   {{{1
@@ -103,9 +101,7 @@ function! s:Bookmark.CacheBookmarks(silent)
                 call nerdtree#echo(invalidBookmarksFound . " invalid bookmarks were read. See :help NERDTreeInvalidBookmarks for info.")
             endif
         endif
-        if g:NERDTreeBookmarksSort ==# 1
-            call s:Bookmark.Sort()
-        endif
+        call s:Bookmark.Sort()
     endif
 endfunction
 
@@ -275,7 +271,7 @@ function! s:Bookmark.toRoot()
             let targetNode = g:NERDTreeFileNode.New(s:Bookmark.BookmarkFor(self.name).path)
         endtry
         call targetNode.makeRoot()
-        call b:NERDTree.render()
+        call nerdtree#renderView()
         call targetNode.putCursorHere(0, 0)
     endif
 endfunction
@@ -293,7 +289,7 @@ function! s:Bookmark.validate()
         return 1
     else
         call s:Bookmark.CacheBookmarks(1)
-        call b:NERDTree.render()
+        call nerdtree#renderView()
         call nerdtree#echo(self.name . "now points to an invalid location. See :help NERDTreeInvalidBookmarks for info.")
         return 0
     endif

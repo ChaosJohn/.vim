@@ -1,11 +1,11 @@
 " Vim syntax file
 " Language:    Backbone.js for ls
 " Maintainer:  othree <othree@gmail.com>
-" Last Change: 2013/07/26
+" Last Change: 2013/02/05
 " Version:     0.9.10
 " URL:         http://backbonejs.org/
 
-syntax keyword lsBackbone Backbone Collection Model View Events Router History Sync Utility containedin=ALLBUT,lsComment,lsLineComment,lsString,lsTemplate,lsTemplateSubstitution
+syntax keyword lsBackbone Backbone Collection Model View Events Router History Sync Utility containedin=ALLBUT,lsComment,lsString
 
 syntax cluster lsBFunctions contains=lsBEvents,lsBModel,lsBCollection,lsBRouter,lsBHistory,lsBSync,lsBView,lsBUtility
 syntax cluster lsBAttrs contains=lsBModelAttrs,lsBCollectionAttrs,lsBRouterAttrs,lsBSyncAttrs,lsBViewAttrs

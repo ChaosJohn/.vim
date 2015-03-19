@@ -33,10 +33,8 @@ function! s:Path.bookmarkNames()
 endfunction
 
 "FUNCTION: Path.cacheDisplayString() {{{1
-function! s:Path.cacheDisplayString() abort
-    let self.cachedDisplayString = self.flagSet.renderToString()
-
-    let self.cachedDisplayString .= self.getLastPathComponent(1)
+function! s:Path.cacheDisplayString()
+    let self.cachedDisplayString = self.getLastPathComponent(1)
 
     if self.isExecutable
         let self.cachedDisplayString = self.cachedDisplayString . '*'
@@ -105,10 +103,6 @@ function! s:Path.compareTo(path)
     elseif thisSS > thatSS
         return 1
     else
-        if !g:NERDTreeSortHiddenFirst
-            let thisPath = substitute(thisPath, '^[._]', '', '')
-            let thatPath = substitute(thatPath, '^[._]', '', '')
-        endif
         "if the sort sequences are the same then compare the paths
         "alphabetically
         let pathCompare = g:NERDTreeCaseSensitiveSort ? thisPath <# thatPath : thisPath <? thatPath
@@ -147,7 +141,6 @@ function! s:Path.Create(fullpath)
 
         "assume its a file and create
         else
-            call s:Path.createParentDirectories(a:fullpath)
             call writefile([], a:fullpath)
         endif
     catch
@@ -168,11 +161,9 @@ function! s:Path.copy(dest)
         throw "NERDTree.CopyingNotSupportedError: Copying is not supported on this OS"
     endif
 
-    call s:Path.createParentDirectories(a:dest)
-
     let dest = s:Path.WinToUnixPath(a:dest)
 
-    let cmd = g:NERDTreeCopyCmd . " " . escape(self.str(), self._escChars()) . " " . escape(dest, self._escChars())
+    let cmd = g:NERDTreeCopyCmd . " " . escape(self.str(), nerdtree#escChars()) . " " . escape(dest, nerdtree#escChars())
     let success = system(cmd)
     if success != 0
         throw "NERDTree.CopyError: Could not copy ''". self.str() ."'' to: '" . a:dest . "'"
@@ -203,20 +194,6 @@ function! s:Path.copyingWillOverwrite(dest)
         if filereadable(path)
             return 1
         endif
-    endif
-endfunction
-
-"FUNCTION: Path.createParentDirectories(path) {{{1
-"
-"create parent directories for this path if needed
-"without throwing any errors is those directories already exist
-"
-"Args:
-"path: full path of the node whose parent directories may need to be created
-function! s:Path.createParentDirectories(path)
-    let dir_path = fnamemodify(a:path, ':h')
-    if !isdirectory(dir_path)
-        call mkdir(dir_path, 'p')
     endif
 endfunction
 
@@ -289,15 +266,6 @@ endfunction
 function! s:Path.exists()
     let p = self.str()
     return filereadable(p) || isdirectory(p)
-endfunction
-
-"FUNCTION: Path._escChars() {{{1
-function! s:Path._escChars()
-    if nerdtree#runningWindows()
-        return " `\|\"#%&,?()\*^<>"
-    endif
-
-    return " \\`\|\"#%&,?()\*^<>[]"
 endfunction
 
 "FUNCTION: Path.getDir() {{{1
@@ -471,7 +439,6 @@ function! s:Path.New(path)
     call newPath.readInfoFromDisk(s:Path.AbsolutePathFor(a:path))
 
     let newPath.cachedDisplayString = ""
-    let newPath.flagSet = g:NERDTreeFlagSet.New()
 
     return newPath
 endfunction
@@ -549,13 +516,6 @@ endfunction
 "FUNCTION: Path.refresh() {{{1
 function! s:Path.refresh()
     call self.readInfoFromDisk(self.str())
-    call g:NERDTreePathNotifier.NotifyListeners('refresh', self, {})
-    call self.cacheDisplayString()
-endfunction
-
-"FUNCTION: Path.refreshFlags() {{{1
-function! s:Path.refreshFlags()
-    call g:NERDTreePathNotifier.NotifyListeners('refreshFlags', self, {})
     call self.cacheDisplayString()
 endfunction
 
@@ -623,13 +583,8 @@ function! s:Path.str(...)
 
     if has_key(options, 'truncateTo')
         let limit = options['truncateTo']
-        if len(toReturn) > limit-1
-            let toReturn = toReturn[(len(toReturn)-limit+1):]
-            if len(split(toReturn, '/')) > 1
-                let toReturn = '</' . join(split(toReturn, '/')[1:], '/') . '/'
-            else
-                let toReturn = '<' . toReturn
-            endif
+        if len(toReturn) > limit
+            let toReturn = "<" . strpart(toReturn, len(toReturn) - limit + 1)
         endif
     endif
 
@@ -649,7 +604,7 @@ endfunction
 "
 " returns a string that can be used with :cd
 function! s:Path._strForCd()
-    return escape(self.str(), self._escChars())
+    return escape(self.str(), nerdtree#escChars())
 endfunction
 
 "FUNCTION: Path._strForEdit() {{{1
@@ -657,15 +612,25 @@ endfunction
 "Return: the string for this path that is suitable to be used with the :edit
 "command
 function! s:Path._strForEdit()
-    let p = escape(self.str(), self._escChars())
+    let p = escape(self.str({'format': 'UI'}), nerdtree#escChars())
+    let cwd = getcwd() . s:Path.Slash()
 
-    "make it relative
-    let p = fnamemodify(p, ':.')
+    "return a relative path if we can
+    let isRelative = 0
+    if nerdtree#runningWindows()
+        let isRelative = stridx(tolower(p), tolower(cwd)) == 0
+    else
+        let isRelative = stridx(p, cwd) == 0
+    endif
 
-    "handle the edge case where the file begins with a + (vim interprets
-    "the +foo in `:e +foo` as an option to :edit)
-    if p[0] == "+"
-        let p = '\' . p
+    if isRelative
+        let p = strpart(p, strlen(cwd))
+
+        "handle the edge case where the file begins with a + (vim interprets
+        "the +foo in `:e +foo` as an option to :edit)
+        if p[0] == "+"
+            let p = '\' . p
+        endif
     endif
 
     if p ==# ''
@@ -687,7 +652,7 @@ function! s:Path._strForGlob()
     let toReturn = lead . join(self.pathSegments, s:Path.Slash())
 
     if !nerdtree#runningWindows()
-        let toReturn = escape(toReturn, self._escChars())
+        let toReturn = escape(toReturn, nerdtree#escChars())
     endif
     return toReturn
 endfunction

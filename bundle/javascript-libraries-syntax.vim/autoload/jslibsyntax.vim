@@ -1,8 +1,8 @@
 " Vim plugin file
 " Language:    JS Lib syntax loader
 " Maintainer:  othree <othree@gmail.com>
-" Last Change: 2014/10/30
-" Version:     0.4
+" Last Change: 2013/02/24
+" Version:     0.3
 " URL:         https://github.com/othree/javascript-libraries-syntax.vim
 
 let s:libs = [
@@ -11,28 +11,19 @@ let s:libs = [
   \ 'backbone',
   \ 'prelude',
   \ 'angularjs',
-  \ 'angularui',
-  \ 'requirejs',
-  \ 'sugar',
-  \ 'jasmine',
-  \ 'chai',
-  \ 'react',
-  \ 'flux',
-  \ 'handlebars'
-  \ ]
-
-let s:default_libs = [
-  \ 'jquery',
-  \ 'underscore',
-  \ 'backbone',
-  \ 'react'
+  \ 'requirejs'
   \ ]
 
 let s:path = expand('<sfile>:p:h')
 
 function! jslibsyntax#load()
+  if exists('b:javascript_libraries_syntax')
+    return
+  endif
+  let b:javascript_libraries_syntax = 1
+
   if !exists('g:used_javascript_libs') 
-    let g:used_javascript_libs = join(s:default_libs, ',')
+    let g:used_javascript_libs = join(s:libs, ',')
   endif
 
   let index = 0
@@ -44,17 +35,16 @@ function! jslibsyntax#load()
       exec('let use = b:javascript_lib_use_'.lib)
     endif
     if use
-      let fn = s:path.'/syntax/'.lib.'.'.b:current_syntax.'.vim'
+      let fn = s:path.'/syntax/'.lib.'.'.&filetype.'.vim'
       if filereadable(fn)
-        exe('source '.fnameescape(fn))
+        exe('source '.fn)
         let loaded = loaded + 1
       endif
     endif
     let index = index + 1
   endwhile
-  let fn = s:path.'/syntax/postprocess.'.b:current_syntax.'.vim'
-  if loaded > 0 && filereadable(fn)
-    exe('source '.fnameescape(fn))
+  if loaded > 0
+    exe('source '.s:path.'/syntax/postprocess.'.&filetype.'.vim')
   endif
 endfunction
 

@@ -2,18 +2,13 @@
 " Language:    jQuery for ls
 " Maintainer:  othree <othree@gmail.com>
 " Maintainer:  Bruno Michel <brmichel@free.fr>
-" Last Change: 2014/10/29
+" Last Change: 2013/04/23
 " Version:     1.9.0.2
 " URL:         http://api.jquery.com/
 
-setlocal iskeyword-=$
-if exists("b:current_syntax") && b:current_syntax == 'ls'
-  setlocal iskeyword+=$
-endif
-
-syntax keyword lsjQuery jQuery $ containedin=ALLBUT,lsComment,lsLineComment,lsString,lsTemplate,lsTemplateSubstitution
-" syntax match   lsjQuerydot       contained /\./ nextgroup=@lsQGlobals
-" syntax match   lsjQuerydot       contained /([^)]*)\./ nextgroup=@lsQFunctions
+syntax keyword lsjQuery          containedin=ALLBUT,lsComment,lsString jQuery $ nextgroup=lsjQuerydot,lsjQuerybracketsdot
+syntax match   lsjQuerydot       contained /\./ nextgroup=@lsQGlobals
+syntax match   lsjQuerydot       contained /([^)]*)\./ nextgroup=@lsQFunctions
 
 " jQuery.*
 syntax cluster lsQGlobals        contains=lsQCore,lsQCoreObj,lsQCoreData,lsQUtilities,lsQProperties
@@ -26,7 +21,7 @@ syntax keyword lsQUtilities      contained each extend globalEval grep inArray i
 syntax match   lsQUtilities      contained /contains/
 
 " jqobj.*
-syntax cluster lsQFunctions      contains=@lsQGlobals,lsQAjax,lsQAttributes,lsQCallbacks,lsQCore,lsQCSS,lsQData,lsQDeferred,lsQDimensions,lsQEffects,lsQEvents,lsQManipulation,lsQMiscellaneous,lsQOffset,lsQTraversing,lsQUtilities
+syntax cluster lsQFunctions      contains=lsQAjax,lsQAttributes,lsQCallbacks,lsQCore,lsQCSS,lsQData,lsQDeferred,lsQDimensions,lsQEffects,lsQEvents,lsQManipulation,lsQMiscellaneous,lsQOffset,lsQTraversing,lsQUtilities
 syntax keyword lsQAjax           contained ajaxComplete ajaxError ajaxSend ajaxStart ajaxStop ajaxSuccess
 syntax keyword lsQAjax           contained serialize serializeArray ajaxTransport load
 syntax keyword lsQAttributes     contained addClass attr hasClass html prop removeAttr removeClass removeProp toggleClass val
@@ -36,7 +31,7 @@ syntax keyword lsQData           contained clearQueue data dequeue queue removeD
 syntax keyword lsQDeferred       contained Deferred always done fail notify progress promise reject rejectWith resolved resolveWith notifyWith state then
 syntax keyword lsQDimensions     contained height innerHeight innerWidth outerHeight outerWidth width
 syntax keyword lsQEffects        contained hide show toggle
-syntax keyword lsQEffects        contained animate delay stop finish
+syntax keyword lsQEffects        contained animate delay stop
 syntax keyword lsQEffects        contained fadeIn fadeOut fadeTo fadeToggle
 syntax keyword lsQEffects        contained slideDown slideToggle slideUp
 syntax keyword lsQEvents         contained error resize scroll
@@ -60,20 +55,19 @@ syntax keyword lsQTraversing     contained children closest find next nextAll ne
 
 
 " selector
-" syntax match   lsASCII                 contained /\\\d\d\d/
-" syntax region  lsString                start=/"/  skip=/\\\\\|\\"\|\\\n/  end=/"\|$/ contains=lsASCII,@jSelectors
-" syntax region  lsString                start=/'/  skip=/\\\\\|\\'\|\\\n/  end=/'\|$/ contains=lsASCII,@jSelectors
+syntax region  lsString           start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=lsSpecial,@htmlPreproc,@jSelectors
+syntax region  lsString           start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=lsSpecial,@htmlPreproc,@jSelectors
 
-syntax cluster cssSelectors              contains=cssId,cssClass,cssOperators,cssBasicFilters,cssContentFilters,cssVisibility,cssChildFilters,cssForms,cssFormFilters
-syntax match   cssId                     contained containedin=lsString /#[0-9A-Za-z_\-]\+/
-syntax match   cssClass                  contained containedin=lsString /\.[0-9A-Za-z_\-]\+/
-syntax match   cssOperators              contained containedin=lsString /*\|>\|+\|-\|\~/
-syntax match   cssBasicFilters           contained containedin=lsString /:\(animated\|eq\|even\|first\|focus\|gt\|header\|last\|lang\|lt\|not\|odd\|root\|target\)/
-syntax match   cssChildFilters           contained containedin=lsString /:\(first\|last\|nth\|only\|nth-last\)-child/
-syntax match   cssChildFilters           contained containedin=lsString /:\(first\|last\|nth\|only\|nth-last\)-of-type/
-syntax match   cssContentFilters         contained containedin=lsString /:\(contains\|empty\|has\|parent\)/
-syntax match   cssForms                  contained containedin=lsString /:\(button\|checkbox\|checked\|disabled\|enabled\|file\|image\|input\|password\|radio\|reset\|selected\|submit\|text\)/
-syntax match   cssVisibility             contained containedin=lsString /:\(hidden\|visible\)/
+syntax cluster jSelectors      contains=jId,jClass,jOperators,jBasicFilters,jContentFilters,jVisibility,jChildFilters,jForms,jFormFilters
+syntax match   jId             contained /#[0-9A-Za-z_\-]\+/
+syntax match   jClass          contained /\.[0-9A-Za-z_\-]\+/
+syntax match   jOperators      contained /*\|>\|+\|-\|\~/
+syntax match   jBasicFilters   contained /:\(animated\|eq\|even\|first\|focus\|gt\|header\|last\|lang\|lt\|not\|odd\|root\|target\)/
+syntax match   jChildFilters   contained /:\(first\|last\|nth\|only\|nth-last\)-child/
+syntax match   jChildFilters   contained /:\(first\|last\|nth\|only\|nth-last\)-of-type/
+syntax match   jContentFilters contained /:\(contains\|empty\|has\|parent\)/
+syntax match   jForms          contained /:\(button\|checkbox\|checked\|disabled\|enabled\|file\|image\|input\|password\|radio\|reset\|selected\|submit\|text\)/
+syntax match   jVisibility     contained /:\(hidden\|visible\)/
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
@@ -108,15 +102,15 @@ if version >= 508 || !exists("did_jquery_ls_syntax_inits")
   HiLink lsQTraversing     PreProc
   HiLink lsQUtilities      PreProc
 
-  HiLink cssId                     Identifier
-  HiLink cssClass                  Constant
-  HiLink cssOperators              Special
-  HiLink cssBasicFilters           Statement
-  HiLink cssContentFilters         Statement
-  HiLink cssVisibility             Statement
-  HiLink cssChildFilters           Statement
-  HiLink cssForms                  Statement
-  HiLink cssFormFilters            Statement
+  HiLink jId             Identifier
+  HiLink jClass          Constant
+  HiLink jOperators      Special
+  HiLink jBasicFilters   Statement
+  HiLink jContentFilters Statement
+  HiLink jVisibility     Statement
+  HiLink jChildFilters   Statement
+  HiLink jForms          Statement
+  HiLink jFormFilters    Statement
 
 
   delcommand HiLink

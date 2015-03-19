@@ -2,18 +2,13 @@
 " Language:    jQuery for typescript
 " Maintainer:  othree <othree@gmail.com>
 " Maintainer:  Bruno Michel <brmichel@free.fr>
-" Last Change: 2014/10/29
+" Last Change: 2013/04/23
 " Version:     1.9.0.2
 " URL:         http://api.jquery.com/
 
-setlocal iskeyword-=$
-if exists("b:current_syntax") && b:current_syntax == 'typescript'
-  setlocal iskeyword+=$
-endif
-
-syntax keyword typescriptjQuery jQuery $ containedin=ALLBUT,typescriptComment,typescriptLineComment,typescriptString,typescriptTemplate,typescriptTemplateSubstitution
-" syntax match   typescriptjQuerydot       contained /\./ nextgroup=@typescriptQGlobals
-" syntax match   typescriptjQuerydot       contained /([^)]*)\./ nextgroup=@typescriptQFunctions
+syntax keyword typescriptjQuery          containedin=ALLBUT,typescriptComment,typescriptString jQuery $ nextgroup=typescriptjQuerydot,typescriptjQuerybracketsdot
+syntax match   typescriptjQuerydot       contained /\./ nextgroup=@typescriptQGlobals
+syntax match   typescriptjQuerydot       contained /([^)]*)\./ nextgroup=@typescriptQFunctions
 
 " jQuery.*
 syntax cluster typescriptQGlobals        contains=typescriptQCore,typescriptQCoreObj,typescriptQCoreData,typescriptQUtilities,typescriptQProperties
@@ -26,7 +21,7 @@ syntax keyword typescriptQUtilities      contained each extend globalEval grep i
 syntax match   typescriptQUtilities      contained /contains/
 
 " jqobj.*
-syntax cluster typescriptQFunctions      contains=@typescriptQGlobals,typescriptQAjax,typescriptQAttributes,typescriptQCallbacks,typescriptQCore,typescriptQCSS,typescriptQData,typescriptQDeferred,typescriptQDimensions,typescriptQEffects,typescriptQEvents,typescriptQManipulation,typescriptQMiscellaneous,typescriptQOffset,typescriptQTraversing,typescriptQUtilities
+syntax cluster typescriptQFunctions      contains=typescriptQAjax,typescriptQAttributes,typescriptQCallbacks,typescriptQCore,typescriptQCSS,typescriptQData,typescriptQDeferred,typescriptQDimensions,typescriptQEffects,typescriptQEvents,typescriptQManipulation,typescriptQMiscellaneous,typescriptQOffset,typescriptQTraversing,typescriptQUtilities
 syntax keyword typescriptQAjax           contained ajaxComplete ajaxError ajaxSend ajaxStart ajaxStop ajaxSuccess
 syntax keyword typescriptQAjax           contained serialize serializeArray ajaxTransport load
 syntax keyword typescriptQAttributes     contained addClass attr hasClass html prop removeAttr removeClass removeProp toggleClass val
@@ -36,7 +31,7 @@ syntax keyword typescriptQData           contained clearQueue data dequeue queue
 syntax keyword typescriptQDeferred       contained Deferred always done fail notify progress promise reject rejectWith resolved resolveWith notifyWith state then
 syntax keyword typescriptQDimensions     contained height innerHeight innerWidth outerHeight outerWidth width
 syntax keyword typescriptQEffects        contained hide show toggle
-syntax keyword typescriptQEffects        contained animate delay stop finish
+syntax keyword typescriptQEffects        contained animate delay stop
 syntax keyword typescriptQEffects        contained fadeIn fadeOut fadeTo fadeToggle
 syntax keyword typescriptQEffects        contained slideDown slideToggle slideUp
 syntax keyword typescriptQEvents         contained error resize scroll
@@ -60,20 +55,19 @@ syntax keyword typescriptQTraversing     contained children closest find next ne
 
 
 " selector
-" syntax match   typescriptASCII                 contained /\\\d\d\d/
-" syntax region  typescriptString                start=/"/  skip=/\\\\\|\\"\|\\\n/  end=/"\|$/ contains=typescriptASCII,@jSelectors
-" syntax region  typescriptString                start=/'/  skip=/\\\\\|\\'\|\\\n/  end=/'\|$/ contains=typescriptASCII,@jSelectors
+syntax region  typescriptString           start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=typescriptSpecial,@htmlPreproc,@jSelectors
+syntax region  typescriptString           start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=typescriptSpecial,@htmlPreproc,@jSelectors
 
-syntax cluster cssSelectors              contains=cssId,cssClass,cssOperators,cssBasicFilters,cssContentFilters,cssVisibility,cssChildFilters,cssForms,cssFormFilters
-syntax match   cssId                     contained containedin=typescriptString /#[0-9A-Za-z_\-]\+/
-syntax match   cssClass                  contained containedin=typescriptString /\.[0-9A-Za-z_\-]\+/
-syntax match   cssOperators              contained containedin=typescriptString /*\|>\|+\|-\|\~/
-syntax match   cssBasicFilters           contained containedin=typescriptString /:\(animated\|eq\|even\|first\|focus\|gt\|header\|last\|lang\|lt\|not\|odd\|root\|target\)/
-syntax match   cssChildFilters           contained containedin=typescriptString /:\(first\|last\|nth\|only\|nth-last\)-child/
-syntax match   cssChildFilters           contained containedin=typescriptString /:\(first\|last\|nth\|only\|nth-last\)-of-type/
-syntax match   cssContentFilters         contained containedin=typescriptString /:\(contains\|empty\|has\|parent\)/
-syntax match   cssForms                  contained containedin=typescriptString /:\(button\|checkbox\|checked\|disabled\|enabled\|file\|image\|input\|password\|radio\|reset\|selected\|submit\|text\)/
-syntax match   cssVisibility             contained containedin=typescriptString /:\(hidden\|visible\)/
+syntax cluster jSelectors      contains=jId,jClass,jOperators,jBasicFilters,jContentFilters,jVisibility,jChildFilters,jForms,jFormFilters
+syntax match   jId             contained /#[0-9A-Za-z_\-]\+/
+syntax match   jClass          contained /\.[0-9A-Za-z_\-]\+/
+syntax match   jOperators      contained /*\|>\|+\|-\|\~/
+syntax match   jBasicFilters   contained /:\(animated\|eq\|even\|first\|focus\|gt\|header\|last\|lang\|lt\|not\|odd\|root\|target\)/
+syntax match   jChildFilters   contained /:\(first\|last\|nth\|only\|nth-last\)-child/
+syntax match   jChildFilters   contained /:\(first\|last\|nth\|only\|nth-last\)-of-type/
+syntax match   jContentFilters contained /:\(contains\|empty\|has\|parent\)/
+syntax match   jForms          contained /:\(button\|checkbox\|checked\|disabled\|enabled\|file\|image\|input\|password\|radio\|reset\|selected\|submit\|text\)/
+syntax match   jVisibility     contained /:\(hidden\|visible\)/
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
@@ -108,15 +102,15 @@ if version >= 508 || !exists("did_jquery_typescript_syntax_inits")
   HiLink typescriptQTraversing     PreProc
   HiLink typescriptQUtilities      PreProc
 
-  HiLink cssId                     Identifier
-  HiLink cssClass                  Constant
-  HiLink cssOperators              Special
-  HiLink cssBasicFilters           Statement
-  HiLink cssContentFilters         Statement
-  HiLink cssVisibility             Statement
-  HiLink cssChildFilters           Statement
-  HiLink cssForms                  Statement
-  HiLink cssFormFilters            Statement
+  HiLink jId             Identifier
+  HiLink jClass          Constant
+  HiLink jOperators      Special
+  HiLink jBasicFilters   Statement
+  HiLink jContentFilters Statement
+  HiLink jVisibility     Statement
+  HiLink jChildFilters   Statement
+  HiLink jForms          Statement
+  HiLink jFormFilters    Statement
 
 
   delcommand HiLink

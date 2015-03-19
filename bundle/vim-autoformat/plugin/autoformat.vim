@@ -1,18 +1,19 @@
-"Function for finding and setting the formatter with the given name
-function! s:set_formatprg(...)
-    let type = a:0 ? a:1 : &filetype
-    "Support composite filetypes by replacing dots with underscores
-    let type = substitute(type, "[.]", "_", "g")
+"Function for finding and setting the formatter with the given name, 
+"if the formatter is installed globally or in the formatters folder
+let s:formatterdir = fnamemodify(expand("<sfile>"), ":p:h:h")."/formatters/"
+function! s:set_formatprg()
+    "Reset previous formatprg
+    set formatprg=""
 
-    "Get formatprg config
-    let s:formatprg_var = "g:formatprg_".type
-    let s:formatprg_args_var = "g:formatprg_args_".type
-    let s:formatprg_args_expr_var = "g:formatprg_args_expr_".type
+    "Get formatprg config for current filetype
+    let s:formatprg_var = "g:formatprg_".&filetype
+    let s:formatprg_args_var = "g:formatprg_args_".&filetype
+    let s:formatprg_args_expr_var = "g:formatprg_args_expr_".&filetype
 
     if !exists(s:formatprg_var)
         "No formatprg defined
-        if exists("g:autoformat_verbosemode")
-            echoerr "No formatter defined for filetype '".type."'."
+        if exists("g:autoformat_verbosemode") 
+            echoerr "No formatter defined for filetype '".&filetype."'."
         endif
         return 0
     endif
@@ -27,11 +28,14 @@ function! s:set_formatprg(...)
 
     "Set correct formatprg path, if it is installed
     if !executable(s:formatprg)
-        "Configured formatprg not installed
-        if exists("g:autoformat_verbosemode")
-            echoerr "Defined formatter ".eval(s:formatprg_var)." is not executable."
+        let s:formatprg = s:formatterdir.s:formatprg
+        if !executable(s:formatprg)
+            "Configured formatprg not installed
+            if exists("g:autoformat_verbosemode") 
+                echoerr "Defined formatter ".eval(s:formatprg_var)." is not executable."
+            endif
+            return 0
         endif
-        return 0
     endif
     let &formatprg = s:formatprg." ".s:formatprg_args
 
@@ -42,11 +46,11 @@ endfunction
 noremap <expr> gq <SID>set_formatprg() ? 'gq' : 'gq'
 
 "Function for formatting the entire buffer
-function! s:Autoformat(...)
+function! s:Autoformat()
     "Save window state
     let winview=winsaveview()
 
-    if call('<SID>set_formatprg', a:000)
+    if <SID>set_formatprg()
         "Autoformat code
         exe "1,$!".&formatprg
     else
@@ -59,4 +63,4 @@ function! s:Autoformat(...)
 endfunction
 
 "Create a command for formatting the entire buffer
-command! -nargs=? -complete=filetype Autoformat call s:Autoformat(<f-args>)
+command! Autoformat call s:Autoformat()
