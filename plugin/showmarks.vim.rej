@@ -1,0 +1,50 @@
+***************
+*** 374,384 ****
+  	let s:maxmarks = strlen(s:IncludeMarks())
+  	while n < s:maxmarks
+  		let c = strpart(s:IncludeMarks(), n, 1)
+- 		if c =~# '[a-zA-Z]' && ln == line("'".c)
+  			let nm = s:NameOfMark(c)
+  			let id = n + (s:maxmarks * winbufnr(0))
+  			exe 'sign unplace '.id.' buffer='.winbufnr(0)
+- 			exe '1 mark '.c
+  			let b:placed_{nm} = 1
+  		endif
+  		let n = n + 1
+--- 394,411 ----
+  	let s:maxmarks = strlen(s:IncludeMarks())
+  	while n < s:maxmarks
+  		let c = strpart(s:IncludeMarks(), n, 1)
++ 		"if c =~# '[a-zA-Z]' && ln == line("'".c)
++ 		if c =~# '[a-zA-Z]' && ln == s:GetMarkLine("'".c)
+  			let nm = s:NameOfMark(c)
+  			let id = n + (s:maxmarks * winbufnr(0))
+  			exe 'sign unplace '.id.' buffer='.winbufnr(0)
++             " Easwy, we can really remove marks in VIM 7.0 and later
++             if v:version >= 700
++                 exe 'delm '.c
++             else
++                 exe '1 mark '.c
++             endif
++             " Easwy, end
+  			let b:placed_{nm} = 1
+  		endif
+  		let n = n + 1
+***************
+*** 447,453 ****
+  	while n < s:maxmarks
+  		let c = strpart(s:IncludeMarks(), n, 1)
+  		if c =~# '[a-z]'
+- 			if line("'".c) <= 1
+  				" Found an unused [a-z] mark; we're done.
+  				let next_mark = n
+  				break
+--- 480,487 ----
+  	while n < s:maxmarks
+  		let c = strpart(s:IncludeMarks(), n, 1)
+  		if c =~# '[a-z]'
++ 			"if line("'".c) <= 1
++ 			if s:GetMarkLine("'".c) <= 1
+  				" Found an unused [a-z] mark; we're done.
+  				let next_mark = n
+  				break
