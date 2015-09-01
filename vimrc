@@ -194,15 +194,18 @@ let g:clang_library_path="/Applications/Xcode.app/Contents/Developer/Toolchains/
 "set autoread 
 
 """javacomplete 
-setlocal completefunc=javacomplete#CompleteParamsInfo
+"setlocal completefunc=javacomplete#CompleteParamsInfo
 "autocmd FileType c set omnifunc=ccomplete#Complete
 "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 "autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType java set omnifunc=javacomplete#Complete
+"autocmd FileType java set omnifunc=javacomplete#Complete
 "autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 "autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 "autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+if has("autocmd") 
+  autocmd Filetype java setlocal omnifunc=javacomplete#Complete 
+endif 
 
 
 """shortcuts 
