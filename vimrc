@@ -69,10 +69,10 @@ let Tlist_Sort_Type='name'
 map <silent><leader>tl :TlistToggle<CR>:TlistAddFilesRecursive . *.{cpp,c,C,h,hpp,cc,cxx}<CR>
 
 "miniBufExplorer"
-  let g:miniBufExplMapWindowNavVim = 1 
-  let g:miniBufExplMapWindowNavArrows = 1 
-  let g:miniBufExplMapCTabSwitchBufs = 1 
-  let g:miniBufExplModSelTarget = 1
+let g:miniBufExplMapWindowNavVim = 1 
+let g:miniBufExplMapWindowNavArrows = 1 
+let g:miniBufExplMapCTabSwitchBufs = 1 
+let g:miniBufExplModSelTarget = 1
 
 
 """PhpDoc 
@@ -107,8 +107,10 @@ set laststatus=2
 set encoding=utf-8
 "choose theme
 let g:Powerline_symbols = 'unicode'
-set term=builtin_xterm
-set term=xterm-256color
+if !has('nvim') 
+  "set term=builtin_xterm
+  set term=xterm-256color
+endif 
 
 
 
@@ -217,25 +219,25 @@ map <silent><leader>sh :!zsh
 """"Code 
 """cscope
 "if has("cscope") 
-  "set cscopetag 
-  "set csto=1 
+"set cscopetag 
+"set csto=1 
 
-  "if filereadable("cscope.out") 
-    "cs add cscope.out 
-  "elseif $CSCOPE_DB !="" 
-    "cs add $CSCOPE_DB 
-  "endif 
+"if filereadable("cscope.out") 
+"cs add cscope.out 
+"elseif $CSCOPE_DB !="" 
+"cs add $CSCOPE_DB 
+"endif 
 
-  "set cscopeverbose 
+"set cscopeverbose 
 
-  "nmap <C-/>s :cs find s <C-R>=expand("<cword>")<CR><CR> 
-  "nmap <C-/>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-  "nmap <C-/>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-  "nmap <C-/>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-  "nmap <C-/>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-  "nmap <C-/>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-  "nmap <C-/>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-  "nmap <C-/>d :cs find d <C-R>=expand("<cword>")<CR><CR> 
+"nmap <C-/>s :cs find s <C-R>=expand("<cword>")<CR><CR> 
+"nmap <C-/>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-/>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-/>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-/>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-/>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+"nmap <C-/>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"nmap <C-/>d :cs find d <C-R>=expand("<cword>")<CR><CR> 
 "endif 
 
 """"""""""""""""""""""""""""""
@@ -274,3 +276,9 @@ let showmarks_hlline_upper = 1
 " markbrowser setting
 """"""""""""""""""""""""""""""
 nmap <silent><leader>mb :MarksBrowser<cr> 
+
+
+if has('nvim') 
+  ":let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  "tnoremap <Leader>e <C-\><C-n> " This maps Leader + e to exit terminal mode. 
+endif 
