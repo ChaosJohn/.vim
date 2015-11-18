@@ -48,6 +48,13 @@ Plugin 'Emmet.vim'
 Plugin 'easymotion/vim-easymotion' 
 "Plugin 'msanders/snipmate.vim' 
 Plugin 'drmingdrmer/xptemplate' 
+Plugin 'godlygeek/tabular' 
+Plugin 'luochen1990/rainbow'
+Plugin 'Valloric/YouCompleteMe' 
+
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'chriskempson/vim-tomorrow-theme' 
+"Plugin 'tomasr/molokai'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,6 +101,12 @@ syntax on
 set ruler
 
 set mouse=a 
+
+""theme
+syntax enable
+"set background=dark
+"colorscheme solarized 
+colorscheme Tomorrow-Night-Eighties
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -157,6 +170,7 @@ set foldmethod=syntax
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """vim-airline""" 
+"let g:airline_theme='term' 
 let g:airline_theme='badwolf' 
 let g:airline#extensions#hunks#enabled=0
 let g:airline#extensions#branch#enabled=1
@@ -208,6 +222,13 @@ let g:syntastic_check_on_wq = 0
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""rainbow""" 
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """switch between auto-indent and auto-comment"""
 "set paste 
 "set no paste 
@@ -233,4 +254,16 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('win32') 
+
+elseif has('unix') 
+
+elseif has('mac') 
+  set clipboard=unnamed 
+endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
