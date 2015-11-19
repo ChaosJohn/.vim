@@ -50,7 +50,7 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'drmingdrmer/xptemplate' 
 Plugin 'godlygeek/tabular' 
 Plugin 'luochen1990/rainbow'
-Plugin 'Valloric/YouCompleteMe' 
+"Plugin 'Valloric/YouCompleteMe' 
 
 "Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/vim-tomorrow-theme' 
