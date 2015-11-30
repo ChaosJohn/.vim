@@ -56,6 +56,9 @@ Plugin 'luochen1990/rainbow'
 Plugin 'chriskempson/vim-tomorrow-theme' 
 "Plugin 'tomasr/molokai'
 
+"""Python"""
+Plugin 'klen/python-mode' 
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -106,7 +109,7 @@ set mouse=a
 syntax enable
 "set background=dark
 "colorscheme solarized 
-colorscheme Tomorrow-Night-Eighties
+"colorscheme Tomorrow-Night-Eighties
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
