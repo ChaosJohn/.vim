@@ -35,6 +35,7 @@ Plugin 'taglist.vim'
 Plugin 'TabBar' 
 "Plugin 'powerline/powerline'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'indentLine.vim' 
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimfiler.vim'  "depends on unite.vim 
@@ -53,7 +54,7 @@ Plugin 'luochen1990/rainbow'
 "Plugin 'Valloric/YouCompleteMe' 
 
 "Plugin 'altercation/vim-colors-solarized'
-Plugin 'chriskempson/vim-tomorrow-theme' 
+"Plugin 'chriskempson/vim-tomorrow-theme' 
 "Plugin 'tomasr/molokai'
 
 " All of your Plugins must be added before the following line
@@ -106,7 +107,7 @@ set mouse=a
 syntax enable
 "set background=dark
 "colorscheme solarized 
-colorscheme Tomorrow-Night-Eighties
+"colorscheme Tomorrow-Night-Eighties
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
