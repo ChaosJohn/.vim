@@ -53,7 +53,7 @@ Plugin 'luochen1990/rainbow'
 "Plugin 'Valloric/YouCompleteMe' 
 
 "Plugin 'altercation/vim-colors-solarized'
-Plugin 'chriskempson/vim-tomorrow-theme' 
+"Plugin 'chriskempson/vim-tomorrow-theme' 
 "Plugin 'tomasr/molokai'
 
 " All of your Plugins must be added before the following line
@@ -106,7 +106,7 @@ set mouse=a
 syntax enable
 "set background=dark
 "colorscheme solarized 
-colorscheme Tomorrow-Night-Eighties
+"colorscheme Tomorrow-Night-Eighties
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
