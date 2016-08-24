@@ -35,6 +35,7 @@ Plugin 'taglist.vim'
 Plugin 'TabBar' 
 "Plugin 'powerline/powerline'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'indentLine.vim' 
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimfiler.vim'  "depends on unite.vim 
