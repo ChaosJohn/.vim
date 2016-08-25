@@ -51,7 +51,9 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'drmingdrmer/xptemplate' 
 Plugin 'godlygeek/tabular' 
 Plugin 'luochen1990/rainbow'
-"Plugin 'Valloric/YouCompleteMe' 
+Plugin 'Valloric/YouCompleteMe' 
+Plugin 'rdnetto/YCM-Generator' 
+Plugin 'Valloric/ycmd'
 
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'chriskempson/vim-tomorrow-theme' 
@@ -267,4 +269,11 @@ elseif has('unix')
 elseif has('mac') 
   set clipboard=unnamed 
 endif
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_confirm_extra_conf = 0 
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
