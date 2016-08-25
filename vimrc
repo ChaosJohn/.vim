@@ -53,7 +53,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'luochen1990/rainbow'
 Plugin 'Valloric/YouCompleteMe' 
 Plugin 'rdnetto/YCM-Generator' 
-Plugin 'Valloric/ycmd'
+"Plugin 'Valloric/ycmd'
 
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'chriskempson/vim-tomorrow-theme' 
