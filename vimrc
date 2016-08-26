@@ -32,7 +32,8 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic' 
 Plugin 'taglist.vim' 
 " TabBar derived from miniBufExplorer 
-Plugin 'TabBar' 
+"Plugin 'TabBar' 
+Plugin 'humiaozuzu/tabbar' "http://vimawesome.com/plugin/tabbar-red 
 "Plugin 'powerline/powerline'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -244,6 +245,7 @@ map <silent><leader>ft :Autoformat
 map <silent><leader>mk :make
 map <silent><leader>sh :!zsh 
 map <silent><leader>nt :NERDTreeToggle
+map <silent><leader>bd :Tbbd
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
