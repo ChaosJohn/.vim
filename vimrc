@@ -92,6 +92,7 @@ set nu!
 set autoindent
 set smartindent
 set wrap 
+let loaded_matchparen = 1 
 
 "set noerrorbells
 "set novisualbell
