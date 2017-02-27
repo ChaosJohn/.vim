@@ -121,6 +121,7 @@ autocmd vimenter * NERDTree
 "let g:NERDTreeDirArrows = 1
 "let g:NERDTreeDirArrowExpandable = '>'
 "let g:NERDTreeDirArrowCollapsible = '_'
+map <silent><leader>tn :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
