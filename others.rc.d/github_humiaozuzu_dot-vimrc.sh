@@ -18,6 +18,8 @@ HOME=. vim -u .vim/vimrc +BundleInstall
 sed -i "s/'.vital')/'.vital', 1)/g" .vim/bundle/neocomplcache/autoload/vital.vim 
 #sed -i 's/set background=dark/"set background=dark/g' .vim/vimrc
 sed -i 's/color solarized/"color solarized/g' .vim/vimrc
+sed -i 's/let g:tagbar_left=1/let g:tagbar_left=0/g' .vim/vimrc
+sed -i 's/let NERDTreeWinPos = "right"/let NERDTreeWinPos = "left"/g' .vim/vimrc
 
 mkdir -p ../bin
 cp $HOME/.vim/_vim ../bin/vim.$VIMNAME
