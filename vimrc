@@ -31,6 +31,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic' 
 Plugin 'taglist.vim' 
+Plugin 'majutsushi/tagbar'
 " TabBar derived from miniBufExplorer 
 "Plugin 'TabBar' 
 Plugin 'humiaozuzu/tabbar' "http://vimawesome.com/plugin/tabbar-red 
@@ -156,6 +157,13 @@ let Tlist_Sort_Type='name'
 "map <C-i> :TlistToggle<cr>
 "map <S-A-F10> :TlistToggle<CR>:TlistAddFilesRecursive . *.{cpp,c,C,h,hpp,cc,cxx}<CR>
 map <silent><leader>tl :TlistToggle<CR>:TlistAddFilesRecursive . *.{cpp,c,C,h,hpp,cc,cxx}<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""TagBar"""
+map <F2> :TagbarToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
