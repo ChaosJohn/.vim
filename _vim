@@ -2,4 +2,4 @@
 
 fakeHome=$HOME/.vim/others/DEFAULT
 
-HOME=$fakeHome vim -u $fakeHome/.vim/vimrc $1
+HOME=$fakeHome vim -u $fakeHome/.vimrc $1
