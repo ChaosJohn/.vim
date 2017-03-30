@@ -163,7 +163,8 @@ map <silent><leader>tl :TlistToggle<CR>:TlistAddFilesRecursive . *.{cpp,c,C,h,hp
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """TagBar"""
-map <F2> :TagbarToggle<CR>
+nmap <F6> :TagbarToggle<CR>
+nmap <F5> :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
