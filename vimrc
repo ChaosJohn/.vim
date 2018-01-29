@@ -54,6 +54,7 @@ Plugin 'drmingdrmer/xptemplate'
 Plugin 'godlygeek/tabular' 
 Plugin 'luochen1990/rainbow'
 "Plugin 'Valloric/YouCompleteMe' 
+"Plugin 'leafo/moonscript-vim'
 
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'chriskempson/vim-tomorrow-theme' 
