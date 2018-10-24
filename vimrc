@@ -57,6 +57,7 @@ Plugin 'luochen1990/rainbow'
 "Plugin 'Valloric/YouCompleteMe' 
 "Plugin 'leafo/moonscript-vim'
 Plugin 'rust-lang/rust.vim'
+"Plugin 'klen/python-mode'
 
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'chriskempson/vim-tomorrow-theme' 
@@ -236,6 +237,23 @@ let g:syntastic_check_on_wq = 0
 
 "let g:syntastic_rust_checkers = ['rustc']
 let g:syntastic_rust_checkers = ['cargo']
+
+"let g:syntastic_python_checkers = ['python3'] "not working
+
+function Py2()
+  "let g:syntastic_python_python_exec = '/usr/local/bin/python2.7'
+	let g:syntastic_python_python_exec = 'python2'
+	"let g:syntastic_python_checkers = ['python2'] " not working
+endfunction
+
+function Py3()
+  "let g:syntastic_python_python_exec = '/usr/local/bin/python3.6'
+	let g:syntastic_python_python_exec = 'python3'
+	"let g:syntastic_python_checkers = ['python3'] " not working
+endfunction
+
+call Py3() " default using python3 syntax
+"call Py2()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
