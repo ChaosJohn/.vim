@@ -58,6 +58,7 @@ Plugin 'luochen1990/rainbow'
 "Plugin 'leafo/moonscript-vim'
 Plugin 'rust-lang/rust.vim'
 "Plugin 'klen/python-mode'
+Plugin 'leafgarland/typescript-vim'
 
 "Plugin 'altercation/vim-colors-solarized'
 "Plugin 'chriskempson/vim-tomorrow-theme' 
