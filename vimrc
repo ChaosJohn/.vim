@@ -122,7 +122,7 @@ syntax enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """NERDTree"""
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 "let g:NERDTreeDirArrows = 0
 "let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '+'
