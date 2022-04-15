@@ -1,1 +1,1 @@
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone git@github.com:ChaosJohn/Vundle.vim.git ~/.vim/bundle/Vundle.vim
